@@ -1,0 +1,20 @@
+{
+  "name": "tailwind-svg-icons",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "author": "J. Ryan Conklin",
+  "license": "MIT",
+  "scripts": {
+    "test": "node index.js",
+    "preinstall": "rm -rf heroicons",
+    "postinstall": "git clone https://github.com/tailwindlabs/heroicons.git && cd heroicons && rm -rf .git && cd -"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "mini-svg-data-uri": "^1.2.3"
+  },
+  "devDependencies": {
+    "tailwindcss": "^1.7.6"
+  }
+}
