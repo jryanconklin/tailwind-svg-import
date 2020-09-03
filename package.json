@@ -1,9 +1,9 @@
 {
-  "name": "tailwind-svg-icons",
+  "name": "tailwind-svg-import",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-  "author": "J. Ryan Conklin",
+  "author": "J. Ryan Conklin @jryanconklin",
   "license": "MIT",
   "scripts": {
     "test": "node index.js",

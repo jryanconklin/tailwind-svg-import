@@ -22,7 +22,7 @@ function readSvg(dir) {
     .reduce((acc, filePath) => {
       const name = filePath.replace(tail, '');
       try {
-        acc[name] = fs.readFileSync(path.join(dir, filePath), 'utf8');
+        acc[name] = svgToDataUri(fs.readFileSync(path.join(dir, filePath), 'utf8'));
       } catch (err) {
         console.error(`file read error ${filePath}: ${err}`);
       }
@@ -43,26 +43,27 @@ function mergeSvgs(dirs) {
 function mergeColors(colors, svgs) {
   const flatColors = flattenColorPalette.default(colors);
   return Object.entries(flatColors).reduce((acc, [color, value]) => {
+    const replace = value.replace('#', '%23');
     Object.entries(svgs).forEach(([name, content]) => {
       const newKey = `${name}-${color}`;
-      acc[newKey] = svgToDataUri(content.replace('currentColor', value));
+      acc[newKey] = content.replace('currentColor', replace);
     });
     return acc;
   }, {});
 }
 
-function mergeSvgsColors(options) {
+function mergeOptions(options) {
   if (isEmpty(options.svgs.dirs) || isEmpty(options.svgs.colors)) {
     console.error(`Requires svgs.colors and svgs.dirs in Tailwind options.`);
     return undefined;
   }
-  const { dirs, colors } = options.svgs;
+  const { dirs, colors, colorize } = options.svgs;
   const svgs =
     Object.keys(dirs).length === 1
       ? readSvg(Object.values(dirs)[0])
       : mergeSvgs(dirs);
 
-  return mergeColors(colors, svgs);
+  return colorize ? mergeColors(colors, svgs) : svgs;
 }
 
 module.exports = {};

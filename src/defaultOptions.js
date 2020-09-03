@@ -30,11 +30,12 @@ console.log(outline);
 
 module.exports = {
   svgs: {
-    mode,
     colors,
+    colorize: false,
     dirs: {
       outline,
       solid,
     },
+    mode,
   },
 };
