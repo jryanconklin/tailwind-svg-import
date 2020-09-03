@@ -20,6 +20,17 @@ const colors = {
 };
 
 module.exports = {
-  dir: path.resolve(__dirname, '../heroicons/optimized/outline/'),
-  colors,
+  icons: {
+    colors,
+    dirs: {
+      outline: {
+        path: path.resolve(__dirname, '../heroicons/optimized/outline/'),
+        mode: 'stroke',
+      },
+      solid: {
+        path: path.resolve(__dirname, '../heroicons/optimized/solid/'),
+        mode: 'fill',
+      },
+    },
+  },
 };
