@@ -4,6 +4,9 @@ const defaultTheme = require('tailwindcss/resolveConfig')(
 
 const path = require('path');
 
+// The extraction mode: all|vars|utils
+const mode = 'all';
+// The alteration colors to add for icons.
 const colors = {
   black: defaultTheme.colors.black,
   white: defaultTheme.colors.white,
@@ -19,18 +22,19 @@ const colors = {
   pink: defaultTheme.colors.pink[500],
 };
 
+// Icon directories to scan.
+const outline = path.resolve(__dirname, '../heroicons/optimized/outline/');
+const solid = path.resolve(__dirname, '../heroicons/optimized/solid/');
+
+console.log(outline);
+
 module.exports = {
-  icons: {
+  svgs: {
+    mode,
     colors,
     dirs: {
-      outline: {
-        path: path.resolve(__dirname, '../heroicons/optimized/outline/'),
-        mode: 'stroke',
-      },
-      solid: {
-        path: path.resolve(__dirname, '../heroicons/optimized/solid/'),
-        mode: 'fill',
-      },
+      outline,
+      solid,
     },
   },
 };
