@@ -7,7 +7,6 @@
   "author": "J. Ryan Conklin @jryanconklin",
   "license": "MIT",
   "scripts": {
-    "test": "node index.js",
     "preinstall": "rm -rf heroicons",
     "postinstall": "git clone https://github.com/tailwindlabs/heroicons.git && cd heroicons && rm -rf .git && cd -"
   },
