@@ -73,10 +73,15 @@ module.exports = function ({ addUtilities, addComponents, theme }) {
     }
 
     const svgs = getSvgs(options);
-    const newComponents = Object.entries(svgs).reduce((acc, [k, v]) => {
-      acc[k] = { ':root': `url(${v})` }
+    const transformSvg = Object.entries(svgs).reduce((acc, [k, v]) => {
+      const newKey = `--icon-${k}`;
+      acc[newKey] = `url('${v}')`;
       return acc;
     }, {})
+    const newComponents = {
+      ':root': transformSvg,
+    };
+    console.log(newComponents);
 
     addComponents(newComponents);
   }
@@ -87,7 +92,8 @@ module.exports = function ({ addUtilities, addComponents, theme }) {
     }
     const svgs = getSvgs(options);
     const newUtilities = Object.entries(svgs).reduce((acc, [k, v]) => {
-      acc[k] = { backgroundImage: `url(${v})` }
+      const newKey = `.icon-${k}`;
+      acc[newKey] = { backgroundImage: `url('${v}')` };
       return acc;
     }, {})
 
