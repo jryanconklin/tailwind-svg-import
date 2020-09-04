@@ -1,13 +1,12 @@
 {
   "name": "tailwind-svg-import",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Import your file system svgs to Tailwind.",
   "main": "index.js",
   "repository": "https://github.com/jryanconklin/tailwind-svg-import",
   "author": "J. Ryan Conklin @jryanconklin",
   "license": "MIT",
   "scripts": {
-    "test": "node index.js",
     "lint": "eslint --ext .js ./",
     "fix": "npm run lint; prettier --write .",
     "preinstall": "rm -rf heroicons",
