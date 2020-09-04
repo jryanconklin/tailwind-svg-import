@@ -52,12 +52,12 @@ function mergeColors(colors, svgs) {
   }, {});
 }
 
-function mergeOptions(options) {
-  if (isEmpty(options.svgs.dirs) || isEmpty(options.svgs.colors)) {
-    console.error(`Requires svgs.colors and svgs.dirs in Tailwind options.`);
+function getSvgs(options) {
+  if (isEmpty(options.dirs) || isEmpty(options.colors)) {
+    console.error(`Requires options.colors and options.dirs in Tailwind options.`);
     return undefined;
   }
-  const { dirs, colors, colorize } = options.svgs;
+  const { dirs, colors, colorize } = options;
   const svgs =
     Object.keys(dirs).length === 1
       ? readSvg(Object.values(dirs)[0])
@@ -66,4 +66,43 @@ function mergeOptions(options) {
   return colorize ? mergeColors(colors, svgs) : svgs;
 }
 
-module.exports = {};
+module.exports = function ({ addUtilities, addComponents, theme }) {
+  function processVars(options) {
+    if (isEmpty(options)) {
+      return;
+    }
+
+    const svgs = getSvgs(options);
+    const newComponents = Object.entries(svgs).reduce((acc, [k, v]) => {
+      acc[k] = { ':root': `url(${v})` }
+      return acc;
+    }, {})
+
+    addComponents(newComponents);
+  }
+
+  function processUtilities(options) {
+    if (isEmpty(options)) {
+      return;
+    }
+    const svgs = getSvgs(options);
+    const newUtilities = Object.entries(svgs).reduce((acc, [k, v]) => {
+      acc[k] = { backgroundImage: `url(${v})` }
+      return acc;
+    }, {})
+
+    addUtilities(newUtilities);
+  }
+
+  function registerSvgs() {
+    const options = resolveOptions(theme('svgImport'));
+    if (options.mode === 'all' || options.mode === 'vars') {
+      processVars(options);
+    }
+    if (options.mode === 'all' || options.mode === 'utils') {
+      processUtilities(options);
+    }
+  }
+
+  registerSvgs();
+};

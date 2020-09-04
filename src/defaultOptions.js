@@ -26,16 +26,12 @@ const colors = {
 const outline = path.resolve(__dirname, '../heroicons/optimized/outline/');
 const solid = path.resolve(__dirname, '../heroicons/optimized/solid/');
 
-console.log(outline);
-
 module.exports = {
-  svgs: {
-    colors,
-    colorize: false,
-    dirs: {
-      outline,
-      solid,
-    },
-    mode,
+  colors,
+  colorize: false,
+  dirs: {
+    outline,
+    solid,
   },
+  mode,
 };

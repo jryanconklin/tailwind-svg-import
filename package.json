@@ -1,8 +1,9 @@
 {
   "name": "tailwind-svg-import",
   "version": "0.1.0",
-  "description": "",
+  "description": "Import your file system svgs to Tailwind.",
   "main": "index.js",
+  "repository": "https://github.com/jryanconklin/tailwind-svg-import",
   "author": "J. Ryan Conklin @jryanconklin",
   "license": "MIT",
   "scripts": {
