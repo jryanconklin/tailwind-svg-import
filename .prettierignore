@@ -1,0 +1,5 @@
+# Ignore any path/file using .gitignore syntax
+
+node_modules/
+heroicons/
+package-lock.json

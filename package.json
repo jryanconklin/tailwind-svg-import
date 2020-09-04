@@ -7,6 +7,9 @@
   "author": "J. Ryan Conklin @jryanconklin",
   "license": "MIT",
   "scripts": {
+    "test": "node index.js",
+    "lint": "eslint --ext .js ./",
+    "fix": "npm run lint; prettier --write .",
     "preinstall": "rm -rf heroicons",
     "postinstall": "git clone https://github.com/tailwindlabs/heroicons.git && cd heroicons && rm -rf .git && cd -"
   },
@@ -15,6 +18,10 @@
     "mini-svg-data-uri": "^1.2.3"
   },
   "devDependencies": {
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "husky": "^4.2.5",
+    "prettier": "2.1.1",
     "tailwindcss": "^1.7.6"
   }
 }

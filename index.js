@@ -22,7 +22,7 @@ function readSvg(dir) {
     .reduce((acc, filePath) => {
       const name = filePath.replace(tail, '');
       try {
-        acc[name] = svgToDataUri(fs.readFileSync(path.join(dir, filePath), 'utf8'));
+        acc[name] = fs.readFileSync(path.join(dir, filePath), 'utf8');
       } catch (err) {
         console.error(`file read error ${filePath}: ${err}`);
       }
@@ -43,18 +43,17 @@ function mergeSvgs(dirs) {
 function mergeColors(colors, svgs) {
   const flatColors = flattenColorPalette.default(colors);
   return Object.entries(flatColors).reduce((acc, [color, value]) => {
-    const replace = value.replace('#', '%23');
     Object.entries(svgs).forEach(([name, content]) => {
       const newKey = `${name}-${color}`;
-      acc[newKey] = content.replace('currentColor', replace);
+      acc[newKey] = content.replace('currentColor', value);
     });
     return acc;
   }, {});
 }
 
 function getSvgs(options) {
-  if (isEmpty(options.dirs) || isEmpty(options.colors)) {
-    console.error(`Requires options.colors and options.dirs in Tailwind options.`);
+  if (isEmpty(options.dirs)) {
+    console.error(`Requires options.dirs in Tailwind options.`);
     return undefined;
   }
   const { dirs, colors, colorize } = options;
@@ -75,13 +74,12 @@ module.exports = function ({ addUtilities, addComponents, theme }) {
     const svgs = getSvgs(options);
     const transformSvg = Object.entries(svgs).reduce((acc, [k, v]) => {
       const newKey = `--icon-${k}`;
-      acc[newKey] = `url('${v}')`;
+      acc[newKey] = `url("${svgToDataUri(v)}")`;
       return acc;
-    }, {})
+    }, {});
     const newComponents = {
       ':root': transformSvg,
     };
-    console.log(newComponents);
 
     addComponents(newComponents);
   }
@@ -93,9 +91,9 @@ module.exports = function ({ addUtilities, addComponents, theme }) {
     const svgs = getSvgs(options);
     const newUtilities = Object.entries(svgs).reduce((acc, [k, v]) => {
       const newKey = `.icon-${k}`;
-      acc[newKey] = { backgroundImage: `url('${v}')` };
+      acc[newKey] = { backgroundImage: `url("${svgToDataUri(v)}")` };
       return acc;
-    }, {})
+    }, {});
 
     addUtilities(newUtilities);
   }
