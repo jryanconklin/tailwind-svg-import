@@ -1,4 +1,2 @@
-# Ignore Default Build Assets @tailwindlabs/heroicons
-heroicons/
 package-lock.json
 .idea/

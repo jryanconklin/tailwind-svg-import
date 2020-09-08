@@ -11,7 +11,7 @@ const isEmpty = require('lodash/isEmpty');
 const defaultOptions = require('./src/defaultOptions');
 
 function resolveOptions(userOptions) {
-  return userOptions || defaultOptions;
+  return { ...defaultOptions, ...userOptions };
 }
 
 function readSvg(dir) {
